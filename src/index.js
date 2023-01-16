@@ -1,17 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import twigToJSX from './twig-to-jsx';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+window.onload = () => {
+  let twig = `{% set classes = [
+    'badge bg-backgroundNeutral-neutralMedium rounded-2xl capitalize textSm-medium text-text-heading',
+    type == "only-icon" ? 'badge-text-empty',
+    size == "small" ? 'icon-sm',
+    size == "medium" ? 'icon-md',
+    size == "large" ? 'icon-lg',
+  ] %}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  {% set icon_size = 'w-1.5 h-1.5 -mt-0.5 ml-px inline-block' %}
+
+  {# Template #}
+  {% block badge_block %}
+    <span class='{{ attributes.addClass(classes) }}' >
+
+      {% if type == "text-only" %}
+        <a href="abc.com">
+        {{ text }}
+        </a>
+      {% endif %}
+    </span>
+  {% endblock %}`;
+
+  console.log(twigToJSX(twig));
+};
+
